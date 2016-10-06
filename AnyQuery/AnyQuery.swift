@@ -30,9 +30,17 @@ indirect public enum AnyQuery {
                 return NSCompoundPredicate(orPredicateWithSubpredicates: [query1.predicate, query2.predicate])
             }
         case .Equal(let key, let value):
-            return NSPredicate(format: "\(key) == \(value)")
+            if (value is String) {
+                return NSPredicate(format: "\(key) == \"\(value)\"")
+            } else {
+                return NSPredicate(format: "\(key) == \(value)")
+            }
         case .NotEqual(let key, let value):
-            return NSPredicate(format: "\(key) != \(value)")
+            if (value is String) {
+                return NSPredicate(format: "\(key) != \"\(value)\"")
+            } else {
+                return NSPredicate(format: "\(key) != \(value)")
+            }
         case .GreaterThan(let key, let value):
             return NSPredicate(format: "\(key) > \(value)")
         case .GreaterThanOrEqual(let key, let value):
